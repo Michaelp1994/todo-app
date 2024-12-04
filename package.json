@@ -6,6 +6,7 @@
   "license": "MIT",
   "author": "Michael Poulgrain",
   "scripts": {
+    "dev": "pnpm -r dev",
     "format": "prettier . --write"
   },
   "devDependencies": {
