@@ -45,9 +45,11 @@ jobs:
       - name: Install SST
         run: pnpm sst install
 
-      - run: pnpm sst deploy
-      
-      - run: pnpm run db migrate
+      - name: Deploy Staging environment
+        run: pnpm sst deploy
+        
+      - name: Migrate Database
+        run: pnpm run db push
 
       - name: Test
         run: pnpm test
