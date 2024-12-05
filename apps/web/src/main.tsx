@@ -2,8 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./global.css";
 import { ApiProvider } from "./providers/ApiProvider";
-import App from "./components/App";
-
+import Router from "./router";
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
@@ -13,7 +12,7 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <ApiProvider>
-      <App />
+      <Router />
     </ApiProvider>
   </StrictMode>,
 );

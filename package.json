@@ -7,6 +7,7 @@
   "author": "Michael Poulgrain",
   "type": "module",
   "scripts": {
+    "ci": "pnpm run format && pnpm run lint && pnpm run typecheck && pnpm run test",
     "deploy": "sst deploy --stage production",
     "dev": "sst dev",
     "format": "prettier . --check",
