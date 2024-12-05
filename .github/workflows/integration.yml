@@ -64,7 +64,7 @@ jobs:
         run: pnpm sst deploy
 
       - name: Migrate Database
-        run: pnpm run db push
+        run: pnpm run db migrate
 
   end_to_end_testing:
       runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}

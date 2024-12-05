@@ -2,17 +2,18 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci/test]
 
 jobs:
   migrate_deploy_production:
     runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-production
-    env:
+    env: 
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       SST_STAGE: production
     steps:
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -23,4 +24,4 @@ jobs:
         run: pnpm sst deploy
 
       - name: Migrate Database
-        run: pnpm run db push
+        run: pnpm run db migrate
