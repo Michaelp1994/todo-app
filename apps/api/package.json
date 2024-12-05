@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@trpc/server": "^10.45.2",
-    "drizzle-orm": "^0.37.0"
+    "drizzle-orm": "^0.37.0",
+    "pg": "^8.13.1"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.10",
     "eslint": "^9.16.0",
     "eslint-typescript": "^1.1.0",
     "globals": "^15.13.0",
