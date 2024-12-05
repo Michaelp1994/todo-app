@@ -1,12 +1,9 @@
-name: Node.js CI
+name: Integration
 env: 
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SST_STAGE: staging
 on:
-  push:
-    branches: 
-      - ci/test
   pull_request:
     types: [opened, synchronize]
 
