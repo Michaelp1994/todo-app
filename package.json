@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "ci": "pnpm run format && pnpm run lint && pnpm run typecheck && pnpm run test",
+    "db": "sst shell drizzle-kit",
     "deploy": "sst deploy --stage production",
     "dev": "sst dev",
     "format": "prettier . --check",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.146",
+    "drizzle-kit": "^0.29.1",
     "prettier": "^3.4.2",
     "vitest": "^2.1.8"
   },
