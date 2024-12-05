@@ -2,3 +2,4 @@
 node_modules
 sst-env.d.ts
 pnpm-lock.yaml
+drizzle/*
