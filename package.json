@@ -14,7 +14,7 @@
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "lint": "pnpm -r lint",
-    "test": "sst shell vitest run",
+    "test": "vitest run",
     "test:e2e": "echo 'TO BE IMPLEMENTED'",
     "typecheck": "pnpm -r typecheck"
   },

@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
       - name: Test
         run: pnpm test
   format:
-    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -30,23 +30,23 @@ jobs:
       - name: Format
         run: pnpm format   
   lint:
-      runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
-      steps:
-        - name: Checkout repo
-          uses: actions/checkout@v4
-        - name: Setup
-          uses: ./.github/actions/setup
-        - name: Lint
-          run: pnpm lint      
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Lint
+        run: pnpm lint      
   typecheck:
-      runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
-      steps:
-        - name: Checkout repo
-          uses: actions/checkout@v4
-        - name: Setup
-          uses: ./.github/actions/setup
-        - name: Lint
-          run: pnpm typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Lint
+        run: pnpm typecheck
 
   migrate_deploy_staging:
     runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
