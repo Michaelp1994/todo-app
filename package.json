@@ -8,7 +8,9 @@
   "scripts": {
     "deploy": "sst deploy --stage production",
     "dev": "sst dev",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
   },
   "dependencies": {
     "sst": "3.3.47"

@@ -4,11 +4,17 @@
   "exports": {
     ".": "./src/router.ts"
   },
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@trpc/server": "^10.45.2"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1"
+    "@types/node": "^22.10.1",
+    "eslint": "^9.15.0",
+    "eslint-typescript": "^1.1.0",
+    "globals": "^15.12.0"
   }
 }
