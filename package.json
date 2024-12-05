@@ -6,7 +6,8 @@
   "license": "MIT",
   "author": "Michael Poulgrain",
   "scripts": {
-    "dev": "pnpm -parallel dev",
+    "deploy": "sst deploy --stage production",
+    "dev": "sst dev",
     "format": "prettier . --write"
   },
   "dependencies": {
