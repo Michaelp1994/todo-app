@@ -1,0 +1,11 @@
+{
+  "name": "@todo/api",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@trpc/server": "^10.45.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
+  }
+}
