@@ -10,6 +10,7 @@
     "deploy": "sst deploy --stage production",
     "dev": "sst dev",
     "format": "prettier . --check",
+    "format:fix": "prettier . --write",
     "lint": "pnpm -r lint",
     "test": "vitest run",
     "typecheck": "pnpm -r typecheck"
