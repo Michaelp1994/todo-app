@@ -1,0 +1,26 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  migrate_deploy_production:
+    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-production
+    env:
+      SST_STAGE: production
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Deploy to production
+        run: pnpm sst deploy
+
+      - name: Migrate Database
+        run: pnpm run db push

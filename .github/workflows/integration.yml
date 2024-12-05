@@ -3,53 +3,77 @@ name: Node.js CI
 on:
   push:
     branches: 
-      - main
       - ci/test
   pull_request:
     types: [opened, synchronize]
 
 jobs:
-  integration:
+  test:
     runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Test
+        run: pnpm test
+  format:
+    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Format
+        run: pnpm format   
+  lint:
+      runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+        - name: Setup
+          uses: ./.github/actions/setup
+        - name: Lint
+          run: pnpm lint      
+  typecheck:
+      runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+        - name: Setup
+          uses: ./.github/actions/setup
+        - name: Lint
+          run: pnpm typecheck
+
+  migrate_deploy_staging:
+    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-staging
     env:
       SST_STAGE: staging
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          cache: "pnpm"
-
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Format
-        run: pnpm format
-
-      - name: Lint
-        run: pnpm lint
-      
-      - name: Install SST
-        run: pnpm sst install
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Deploy Staging environment
         run: pnpm sst deploy
 
       - name: Migrate Database
         run: pnpm run db push
+
+  end_to_end_testing:
+      runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+      needs: [migrate_deploy_staging]
+      steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Test E2E
+        run: pnpm run test:e2e    
           
-      - name: Test
-        run: pnpm test
