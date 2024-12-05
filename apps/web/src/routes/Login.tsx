@@ -2,13 +2,22 @@ import type React from "react";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { useState } from "react";
+import { api } from "../utils/api";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const loginMutation = api.auth.login.useMutation({
+    onSuccess() {
+      console.log("User logged in");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(username, password);
+    loginMutation.mutate({ email: email, password });
   }
 
   return (
@@ -18,12 +27,14 @@ export default function Login() {
       <div>
         <form onSubmit={handleSubmit}>
           <Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            label="Username"
+            value={email}
+            autoComplete="email"
+            onChange={(e) => setEmail(e.target.value)}
+            label="email"
           />
           <Input
             value={password}
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
             label="Password"
             type="password"
