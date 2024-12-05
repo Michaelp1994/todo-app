@@ -45,19 +45,11 @@ jobs:
       - name: Install SST
         run: pnpm sst install
 
-      - name: Start SST Tunnel
-        run: |
-          nohup pnpm sst tunnel > tunnel.log 2>&1 & sleep 5 
-
       - name: Deploy Staging environment
         run: pnpm sst deploy
 
       - name: Migrate Database
         run: pnpm run db push
-
-      - name: Stop SST Tunnel
-        run: |
-          pkill -f "pnpm sst tunnel"
           
       - name: Test
         run: pnpm test
