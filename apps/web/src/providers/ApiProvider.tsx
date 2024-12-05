@@ -12,7 +12,7 @@ export function ApiProvider({ children }: { children: React.ReactNode }) {
           url: import.meta.env.VITE_API_URL,
         }),
       ],
-    })
+    }),
   );
 
   return (
