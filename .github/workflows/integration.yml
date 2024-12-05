@@ -10,7 +10,7 @@ on:
 
 jobs:
   integration:
-    runs-on: ubuntu-latest
+    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
     env:
       SST_STAGE: staging
     steps:
