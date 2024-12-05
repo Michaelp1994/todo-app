@@ -2,6 +2,7 @@ name: Node.js CI
 env: 
   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  SST_STAGE: staging
 on:
   push:
     branches: 
@@ -51,8 +52,7 @@ jobs:
     runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-staging
-    env:
-      SST_STAGE: staging
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
