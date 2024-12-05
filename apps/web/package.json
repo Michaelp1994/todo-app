@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@todo/web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4",
+    "@trpc/react-query": "^10.45.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@todo/api": "workspace:*",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
