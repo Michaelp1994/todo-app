@@ -1,6 +1,9 @@
 {
   "name": "@todo/api",
   "type": "module",
+  "exports": {
+    ".": "./src/router.ts"
+  },
   "scripts": {},
   "dependencies": {
     "@trpc/server": "^10.45.2"
