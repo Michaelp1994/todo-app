@@ -1,15 +1,14 @@
-version: "3.9"
 services:
   db:
     image: postgres:latest
     container_name: todo-postgres-dev
     restart: always
     environment:
-      POSTGRES_USER: ${DB_USER}
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - todo_postgres_data:/var/lib/postgresql/data
 
