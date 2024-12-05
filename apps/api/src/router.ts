@@ -1,4 +1,4 @@
-import { publicProcedure, router } from "./trpc";
+import { createCallerFactory, publicProcedure, router } from "./trpc";
 
 export const appRouter = router({
   hello: publicProcedure.query(() => {
@@ -6,5 +6,7 @@ export const appRouter = router({
     return "Hello World!";
   }),
 });
+
+export const createCaller = createCallerFactory(appRouter);
 
 export type AppRouter = typeof appRouter;
