@@ -14,7 +14,7 @@
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "lint": "pnpm -r lint",
-    "test": "vitest run",
+    "test": "sst shell vitest run",
     "typecheck": "pnpm -r typecheck"
   },
   "dependencies": {
