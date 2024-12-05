@@ -6,10 +6,22 @@ import "sst"
 export {}
 declare module "sst" {
   export interface Resource {
+    "Vpc": {
+      "bastion": string
+      "type": "sst.aws.Vpc"
+    }
     "api": {
       "name": string
       "type": "sst.aws.Function"
       "url": string
+    }
+    "database": {
+      "database": string
+      "host": string
+      "password": string
+      "port": number
+      "type": "sst.aws.Postgres"
+      "username": string
     }
     "web": {
       "type": "sst.aws.StaticSite"
