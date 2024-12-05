@@ -1,0 +1,28 @@
+name: "Set Up CI Environment"
+description: "Configure Node, PNPM, SST, and AWS CLI"
+runs:
+  using: "composite"
+  steps:
+    - uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Setup PNPM
+      uses: pnpm/action-setup@v4
+      with:
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        cache: "pnpm"
+
+    - name: Install Dependencies
+      run: pnpm install
+      shell: bash
+
+    - name: Install SST
+      run: pnpm sst install
+      shell: bash
