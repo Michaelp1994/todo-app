@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import Layout from "./components/Layout";
+import Layout from "./layouts/Layout";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
+import App from "./routes/App";
 
 export default function Router() {
   return (
