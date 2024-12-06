@@ -4,7 +4,7 @@ import { serialize, parse } from "cookie";
 export function setSessionTokenCookie(
   headers: Headers,
   token: string,
-  expiresAt: Date
+  expiresAt: Date,
 ): void {
   const cookie = serialize("session", token, {
     httpOnly: true,
@@ -17,7 +17,7 @@ export function setSessionTokenCookie(
 }
 
 export function getSessionTokenFromHeaders(
-  headers: APIGatewayProxyEventHeaders
+  headers: APIGatewayProxyEventHeaders,
 ): string | null {
   if (!headers.cookie) {
     return null;

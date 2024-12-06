@@ -17,5 +17,5 @@ createRoot(rootElement).render(
         <Router />
       </AuthProvider>
     </ApiProvider>
-  </StrictMode>
+  </StrictMode>,
 );
