@@ -3,6 +3,7 @@ import { publicProcedure, router } from "../trpc";
 import { loginSchema, registerSchema } from "../validators/auth.schema";
 import { userTable } from "../db/schemas/user";
 import { hashPassword, verifyPasswordHash } from "../auth/passwords";
+import { createSession, generateSessionToken } from "../auth/sessions";
 
 export default router({
   login: publicProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
@@ -21,6 +22,9 @@ export default router({
       throw new Error("Invalid password");
     }
     console.log(`User with email ${input.email} logged in`);
+    const token = generateSessionToken();
+    const session = await createSession(token, user.id);
+    ctx.setSessionCookie(token, session.expiresAt);
     return true;
   }),
   register: publicProcedure
