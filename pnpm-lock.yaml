@@ -30,12 +30,15 @@ importers:
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
+<<<<<<< HEAD
       drizzle-orm:
         specifier: ^0.37.0
         version: 0.37.0(@types/pg@8.11.10)(@types/react@18.3.13)(pg@8.13.1)(react@18.3.1)
       pg:
         specifier: ^8.13.1
         version: 8.13.1
+=======
+>>>>>>> refs/remotes/origin/feat/authentication
       zod:
         specifier: ^3.23.8
         version: 3.23.8
