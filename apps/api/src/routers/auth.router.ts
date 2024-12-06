@@ -1,13 +1,16 @@
 import { eq } from "drizzle-orm";
-import { publicProcedure, router } from "../trpc";
+import { authProcedure, publicProcedure, router } from "../trpc";
 import { loginSchema, registerSchema } from "../validators/auth.schema";
 import { userTable } from "../db/schemas/user";
 import { hashPassword, verifyPasswordHash } from "../auth/passwords";
-import { createSession, generateSessionToken } from "../auth/sessions";
+import {
+  createSession,
+  generateSessionToken,
+  invalidateSession,
+} from "../auth/sessions";
 
 export default router({
   login: publicProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
-    console.log(`Logging in user with email: ${input.email}`);
     const [user] = await ctx.db
       .select()
       .from(userTable)
@@ -21,10 +24,17 @@ export default router({
     if (!isValid) {
       throw new Error("Invalid password");
     }
-    console.log(`User with email ${input.email} logged in`);
     const token = generateSessionToken();
     const session = await createSession(token, user.id);
     ctx.setSessionCookie(token, session.expiresAt);
+    return true;
+  }),
+  validate: publicProcedure.query(async ({ ctx }) => {
+    return ctx.user;
+  }),
+  logout: authProcedure.mutation(async ({ ctx }) => {
+    await invalidateSession(ctx.session.id);
+    ctx.deleteSessionCookie();
     return true;
   }),
   register: publicProcedure
@@ -42,8 +52,9 @@ export default router({
       if (!user) {
         throw new Error("Failed to register user");
       }
-      console.log(`Registered user with email: ${input.email}`);
-
+      const token = generateSessionToken();
+      const session = await createSession(token, user.id);
+      ctx.setSessionCookie(token, session.expiresAt);
       return true;
     }),
 });
