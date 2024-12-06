@@ -23,7 +23,12 @@ export default $config({
     });
 
     const api = new sst.aws.Function("api", {
-      url: true,
+      url: {
+        cors: {
+          allowOrigins: ["http://localhost:5173"], // TODO: add the deployed web URL
+          allowCredentials: true,
+        },
+      },
       vpc,
       handler: "apps/api/src/index.handler",
       link: [db],
