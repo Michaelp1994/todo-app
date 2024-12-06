@@ -47,5 +47,11 @@ export default $config({
         output: "dist",
       },
     });
+    new sst.x.DevCommand("Studio", {
+      dev: {
+        command: "pnpm run db studio",
+        autostart: true,
+      },
+    });
   },
 });
