@@ -17,7 +17,7 @@ export function generateSessionToken(): string {
 
 export async function createSession(
   token: string,
-  userId: number
+  userId: number,
 ): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
@@ -31,7 +31,7 @@ export async function createSession(
 }
 
 export async function validateSessionToken(
-  token: string
+  token: string,
 ): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const result = await db
