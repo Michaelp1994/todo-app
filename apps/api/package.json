@@ -10,13 +10,16 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@trpc/server": "^10.45.2"
+    "@trpc/server": "^10.45.2",
+    "drizzle-orm": "^0.37.0",
+    "pg": "^8.13.1"
   },
   "devDependencies": {
-    "vitest": "^2.1.8",
+    "@types/pg": "^8.11.10",
     "eslint": "^9.16.0",
     "eslint-typescript": "^1.1.0",
     "globals": "^15.13.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   }
 }
