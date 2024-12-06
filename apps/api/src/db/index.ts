@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { Resource } from "sst";
-import { users } from "./schemas/user";
+import { userTable } from "./schemas/user";
 
 const pool = new Pool({
   host: Resource.database.host,
@@ -11,4 +11,4 @@ const pool = new Pool({
   database: Resource.database.database,
 });
 
-export const db = drizzle(pool, { schema: { users } });
+export const db = drizzle(pool, { schema: { user: userTable } });

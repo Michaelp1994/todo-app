@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { publicProcedure, router } from "../trpc";
 import { loginSchema, registerSchema } from "../validators/auth.schema";
-import { users } from "../db/schemas/user";
+import { userTable } from "../db/schemas/user";
 import { hashPassword, verifyPasswordHash } from "../auth/passwords";
 
 export default router({
@@ -9,8 +9,8 @@ export default router({
     console.log(`Logging in user with email: ${input.email}`);
     const [user] = await ctx.db
       .select()
-      .from(users)
-      .where(eq(users.email, input.email))
+      .from(userTable)
+      .where(eq(userTable.email, input.email))
       .execute();
 
     if (!user) {
@@ -27,7 +27,7 @@ export default router({
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
       const [user] = await ctx.db
-        .insert(users)
+        .insert(userTable)
         .values({
           email: input.email,
           password: await hashPassword(input.password),
