@@ -4,9 +4,11 @@ import Input from "./ui/Input";
 import { api } from "../utils/api";
 
 export default function RegisterForm() {
+  const utils = api.useUtils();
+
   const registerMutation = api.auth.register.useMutation({
-    onSuccess() {
-      console.log("User logged in");
+    async onSuccess() {
+      await utils.auth.validate.invalidate();
       setMessage("Registered!");
     },
     onError(error) {

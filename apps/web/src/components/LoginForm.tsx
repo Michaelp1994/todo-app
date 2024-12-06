@@ -4,9 +4,10 @@ import Input from "./ui/Input";
 import { api } from "../utils/api";
 
 export default function LoginForm() {
+  const utils = api.useUtils();
   const loginMutation = api.auth.login.useMutation({
-    onSuccess() {
-      console.log("User logged in");
+    async onSuccess() {
+      await utils.auth.validate.invalidate();
       setMessage("User logged in");
     },
     onError(error) {
@@ -37,7 +38,9 @@ export default function LoginForm() {
         label="Password"
         type="password"
       />
-      <Button type="submit">Login</Button>
+      <Button disabled={loginMutation.isLoading} type="submit">
+        {loginMutation.isLoading ? "Loading..." : "Login"}
+      </Button>
       {message && <p>{message}</p>}
     </form>
   );
