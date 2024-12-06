@@ -27,6 +27,9 @@ export default $config({
       vpc,
       handler: "apps/api/src/index.handler",
       link: [db],
+      nodejs: {
+        install: ["@node-rs/argon2"],
+      },
     });
 
     new sst.aws.StaticSite("web", {
