@@ -10,6 +10,12 @@ export function ApiProvider({ children }: { children: React.ReactNode }) {
       links: [
         httpBatchLink({
           url: import.meta.env.VITE_API_URL,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
         }),
       ],
     }),
