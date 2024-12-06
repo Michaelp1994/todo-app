@@ -3,6 +3,7 @@ import type {
   CreateAWSLambdaContextOptions,
 } from "@trpc/server/adapters/aws-lambda";
 import {
+  deleteSessionTokenCookie,
   getSessionTokenFromHeaders,
   setSessionTokenCookie,
 } from "./auth/cookies";
@@ -16,12 +17,16 @@ export default async function createContext({
   const setSessionCookie = (token: string, expiresAt: Date) => {
     setSessionTokenCookie(resHeaders, token, expiresAt);
   };
+  const deleteSessionCookie = () => {
+    deleteSessionTokenCookie(resHeaders);
+  };
   const sessionToken = getSessionTokenFromHeaders(event.headers);
   if (!sessionToken) {
     return {
       db,
       resHeaders,
       setSessionCookie,
+      deleteSessionCookie,
     };
   }
 
@@ -30,6 +35,7 @@ export default async function createContext({
     db,
     resHeaders,
     setSessionCookie,
+    deleteSessionCookie,
     user,
     session,
   };
