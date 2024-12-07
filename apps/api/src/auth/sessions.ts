@@ -9,6 +9,10 @@ import { userTable, type User } from "../db/schemas/user";
 import type { Database } from "../db";
 // TODO: decouple from db for testing
 
+export type SessionValidationResult =
+  | { session: Session; user: User }
+  | { session: null; user: null };
+
 const THIRTY_DAYS = 1000 * 60 * 60 * 24 * 30; // in milliseconds
 const FIFTEEN_DAYS = 1000 * 60 * 60 * 24 * 15; // in milliseconds
 
@@ -30,7 +34,6 @@ export async function createSession(
     userId,
     expiresAt: new Date(Date.now() + THIRTY_DAYS),
   };
-
   await db.insert(sessionTable).values(session);
   return session;
 }
@@ -71,7 +74,3 @@ export async function invalidateSession(
 ): Promise<void> {
   await db.delete(sessionTable).where(eq(sessionTable.id, sessionId));
 }
-
-export type SessionValidationResult =
-  | { session: Session; user: User }
-  | { session: null; user: null };
