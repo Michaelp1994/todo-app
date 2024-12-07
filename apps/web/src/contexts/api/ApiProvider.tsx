@@ -1,4 +1,4 @@
-import { api } from "../utils/api";
+import { api } from "../../utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { useState } from "react";
@@ -10,9 +10,15 @@ export function ApiProvider({ children }: { children: React.ReactNode }) {
       links: [
         httpBatchLink({
           url: import.meta.env.VITE_API_URL,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
         }),
       ],
-    }),
+    })
   );
 
   return (

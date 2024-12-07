@@ -23,10 +23,18 @@ export default $config({
     });
 
     const api = new sst.aws.Function("api", {
-      url: true,
+      url: {
+        cors: {
+          allowOrigins: ["http://localhost:5173"], // TODO: add the deployed web URL
+          allowCredentials: true,
+        },
+      },
       vpc,
       handler: "apps/api/src/index.handler",
       link: [db],
+      nodejs: {
+        install: ["@node-rs/argon2"],
+      },
     });
 
     new sst.aws.StaticSite("web", {
@@ -37,6 +45,12 @@ export default $config({
       build: {
         command: "pnpm run build",
         output: "dist",
+      },
+    });
+    new sst.x.DevCommand("Studio", {
+      dev: {
+        command: "pnpm run db studio",
+        autostart: true,
       },
     });
   },
