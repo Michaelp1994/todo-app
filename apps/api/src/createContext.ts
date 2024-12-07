@@ -3,14 +3,18 @@ import {
   getSessionTokenFromHeaders,
   setSessionTokenCookie,
 } from "./auth/cookies";
-import { db } from "./db";
+import { type Database } from "./db";
 import { validateSessionToken } from "./auth/sessions";
 
 interface CreateContextInput {
   headers: Headers;
+  db: Database;
 }
 
-export default async function createContext({ headers }: CreateContextInput) {
+export default async function createContext({
+  headers,
+  db,
+}: CreateContextInput) {
   const resHeaders = new Headers();
   const setSessionCookie = (token: string, expiresAt: Date) => {
     setSessionTokenCookie(resHeaders, token, expiresAt);
