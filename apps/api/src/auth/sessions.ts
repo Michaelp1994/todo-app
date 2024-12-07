@@ -6,7 +6,11 @@ import {
 import { sha256 } from "@oslojs/crypto/sha2";
 import { sessionTable, type Session } from "../db/schemas/session";
 import { userTable, type User } from "../db/schemas/user";
-import { db } from "../db"; // TODO: pass db as argument from context
+import type { Database } from "../db";
+// TODO: decouple from db for testing
+
+const THIRTY_DAYS = 1000 * 60 * 60 * 24 * 30; // in milliseconds
+const FIFTEEN_DAYS = 1000 * 60 * 60 * 24 * 15; // in milliseconds
 
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20);
@@ -18,12 +22,13 @@ export function generateSessionToken(): string {
 export async function createSession(
   token: string,
   userId: number,
+  db: Database
 ): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
     id: sessionId,
     userId,
-    expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+    expiresAt: new Date(Date.now() + THIRTY_DAYS),
   };
 
   await db.insert(sessionTable).values(session);
@@ -32,6 +37,7 @@ export async function createSession(
 
 export async function validateSessionToken(
   token: string,
+  db: Database
 ): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const result = await db
@@ -47,8 +53,8 @@ export async function validateSessionToken(
     await db.delete(sessionTable).where(eq(sessionTable.id, session.id));
     return { session: null, user: null };
   }
-  if (Date.now() >= session.expiresAt.getTime() - 1000 * 60 * 60 * 24 * 15) {
-    session.expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
+  if (Date.now() >= session.expiresAt.getTime() - FIFTEEN_DAYS) {
+    session.expiresAt = new Date(Date.now() + THIRTY_DAYS);
     await db
       .update(sessionTable)
       .set({
@@ -59,7 +65,10 @@ export async function validateSessionToken(
   return { session, user };
 }
 
-export async function invalidateSession(sessionId: string): Promise<void> {
+export async function invalidateSession(
+  sessionId: string,
+  db: Database
+): Promise<void> {
   await db.delete(sessionTable).where(eq(sessionTable.id, sessionId));
 }
 

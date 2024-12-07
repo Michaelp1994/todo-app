@@ -25,7 +25,7 @@ export default router({
       throw new Error("Invalid password");
     }
     const token = generateSessionToken();
-    const session = await createSession(token, user.id);
+    const session = await createSession(token, user.id, ctx.db);
     ctx.setSessionCookie(token, session.expiresAt);
     return true;
   }),
@@ -33,7 +33,7 @@ export default router({
     return ctx.user;
   }),
   logout: authProcedure.mutation(async ({ ctx }) => {
-    await invalidateSession(ctx.session.id);
+    await invalidateSession(ctx.session.id, ctx.db);
     ctx.deleteSessionCookie();
     return true;
   }),
@@ -53,7 +53,7 @@ export default router({
         throw new Error("Failed to register user");
       }
       const token = generateSessionToken();
-      const session = await createSession(token, user.id);
+      const session = await createSession(token, user.id, ctx.db);
       ctx.setSessionCookie(token, session.expiresAt);
       return true;
     }),

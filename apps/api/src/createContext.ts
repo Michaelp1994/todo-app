@@ -32,7 +32,7 @@ export default async function createContext({
     };
   }
 
-  const { user, session } = await validateSessionToken(sessionToken);
+  const { user, session } = await validateSessionToken(sessionToken, db);
   return {
     db,
     resHeaders,
