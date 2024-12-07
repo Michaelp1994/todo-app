@@ -1,7 +1,3 @@
-import type {
-  APIGatewayEvent,
-  CreateAWSLambdaContextOptions,
-} from "@trpc/server/adapters/aws-lambda";
 import {
   deleteSessionTokenCookie,
   getSessionTokenFromHeaders,
@@ -10,9 +6,11 @@ import {
 import { db } from "./db";
 import { validateSessionToken } from "./auth/sessions";
 
-export default async function createContext({
-  event,
-}: CreateAWSLambdaContextOptions<APIGatewayEvent>) {
+interface CreateContextInput {
+  headers: Headers;
+}
+
+export default async function createContext({ headers }: CreateContextInput) {
   const resHeaders = new Headers();
   const setSessionCookie = (token: string, expiresAt: Date) => {
     setSessionTokenCookie(resHeaders, token, expiresAt);
@@ -20,7 +18,7 @@ export default async function createContext({
   const deleteSessionCookie = () => {
     deleteSessionTokenCookie(resHeaders);
   };
-  const sessionToken = getSessionTokenFromHeaders(event.headers);
+  const sessionToken = getSessionTokenFromHeaders(headers);
   if (!sessionToken) {
     return {
       db,

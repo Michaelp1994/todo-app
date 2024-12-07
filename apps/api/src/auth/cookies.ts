@@ -1,4 +1,3 @@
-import type { APIGatewayProxyEventHeaders } from "aws-lambda";
 import { serialize, parse } from "cookie";
 
 export function setSessionTokenCookie(
@@ -16,13 +15,12 @@ export function setSessionTokenCookie(
   headers.append("Set-Cookie", cookie);
 }
 
-export function getSessionTokenFromHeaders(
-  headers: APIGatewayProxyEventHeaders,
-): string | null {
-  if (!headers.cookie) {
+export function getSessionTokenFromHeaders(headers: Headers): string | null {
+  const unparsedCookies = headers.get("cookie");
+  if (!unparsedCookies) {
     return null;
   }
-  const cookies = parse(headers.cookie);
+  const cookies = parse(unparsedCookies);
   return cookies.session || null;
 }
 
