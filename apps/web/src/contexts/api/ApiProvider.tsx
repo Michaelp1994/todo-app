@@ -1,4 +1,4 @@
-import { api } from "../utils/api";
+import { api } from "../../utils/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/react-query";
 import { useState } from "react";

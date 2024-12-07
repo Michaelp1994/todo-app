@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./global.css";
-import { ApiProvider } from "./providers/ApiProvider";
+import { ApiProvider } from "./contexts/api/ApiProvider";
+import { AuthProvider } from "./contexts/auth/AuthProvider";
 import Router from "./router";
-import { AuthProvider } from "./providers/AuthProvider";
+import "./global.css";
+
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
