@@ -8,7 +8,6 @@ test("Convert AWS Headers to NodeJS standard library headers", async () => {
     "content-type": "application/json",
     "content-length": "0",
   });
-  console.log(headers.keys());
   expect(headers.get("cookie")).toBe("session=sessionToken");
   expect(headers.get("origin")).toBe("http://localhost:5173");
   expect(headers.get("content-type")).toBe("application/json");
