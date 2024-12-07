@@ -7,6 +7,8 @@ import { sha256 } from "@oslojs/crypto/sha2";
 import { sessionTable, type Session } from "../db/schemas/session";
 import { userTable, type User } from "../db/schemas/user";
 import type { Database } from "../db";
+import { getRandomValues } from "node:crypto";
+
 // TODO: decouple from db for testing
 
 export type SessionValidationResult =
@@ -18,7 +20,7 @@ const FIFTEEN_DAYS = 1000 * 60 * 60 * 24 * 15; // in milliseconds
 
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20);
-  crypto.getRandomValues(bytes);
+  getRandomValues(bytes);
   const token = encodeBase32LowerCaseNoPadding(bytes);
   return token;
 }
