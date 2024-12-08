@@ -28,7 +28,7 @@ export default router({
     });
   }),
   create: authProcedure.input(createSchema).mutation(async ({ ctx, input }) => {
-    const newTodo = await ctx.db
+    const [newTodo] = await ctx.db
       .insert(todoTable)
       .values({ ...input, userId: ctx.user.id })
       .returning()
@@ -37,7 +37,7 @@ export default router({
   }),
   update: authProcedure.input(updateSchema).mutation(async ({ ctx, input }) => {
     const { id, ...values } = input;
-    const updatedTodo = await ctx.db
+    const [updatedTodo] = await ctx.db
       .update(todoTable)
       .set(values)
       .where(and(eq(todoTable.id, id), eq(todoTable.userId, ctx.user.id)))
@@ -48,7 +48,7 @@ export default router({
   archive: authProcedure
     .input(archiveSchema)
     .mutation(async ({ ctx, input }) => {
-      const updatedTodo = await ctx.db
+      const archivedTodo = await ctx.db
         .update(todoTable)
         .set({ archivedAt: new Date() })
         .where(
@@ -56,7 +56,7 @@ export default router({
         )
         .returning()
         .execute();
-      return updatedTodo;
+      return [archivedTodo];
     }),
   delete: authProcedure.input(deleteSchema).mutation(async () => {
     throw new TRPCError({
