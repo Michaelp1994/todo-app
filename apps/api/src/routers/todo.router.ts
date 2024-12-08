@@ -8,6 +8,7 @@ import {
   getByIdSchema,
   updateSchema,
 } from "../validators/todo.schema";
+import { todoTable } from "../db/schemas/todo";
 
 export default router({
   getAll: authProcedure.input(getAllSchema).query(async () => {
@@ -20,10 +21,13 @@ export default router({
       code: "NOT_IMPLEMENTED",
     });
   }),
-  create: authProcedure.input(createSchema).mutation(async () => {
-    throw new TRPCError({
-      code: "NOT_IMPLEMENTED",
-    });
+  create: authProcedure.input(createSchema).mutation(async ({ ctx, input }) => {
+    const newTodo = await ctx.db
+      .insert(todoTable)
+      .values({ ...input, userId: ctx.user.id })
+      .returning()
+      .execute();
+    return newTodo;
   }),
   update: authProcedure.input(updateSchema).mutation(async () => {
     throw new TRPCError({
