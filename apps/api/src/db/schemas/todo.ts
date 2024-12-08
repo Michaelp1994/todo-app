@@ -5,6 +5,7 @@ import {
   pgTable,
   integer,
   boolean,
+  timestamp,
   date,
 } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
@@ -25,8 +26,8 @@ export const todoTable = pgTable("todo", {
   userId: integer()
     .notNull()
     .references(() => userTable.id),
-  createdAt: date().notNull().defaultNow(),
-  archivedAt: date().notNull().defaultNow(),
+  createdAt: timestamp().notNull().defaultNow(),
+  archivedAt: timestamp(),
 });
 
 export type Todo = InferSelectModel<typeof todoTable>;
