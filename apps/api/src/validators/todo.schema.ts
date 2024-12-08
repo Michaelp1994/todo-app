@@ -12,9 +12,10 @@ export const createSchema = z.object({
   title: z.string(),
   description: z.string(),
   completed: z.boolean(),
-  dueDate: z.date(),
+  important: z.boolean(),
+  dueDate: z.string().date(),
   attachmentUrl: z.string(),
-  listId: z.number(),
+  listId: z.number().optional(),
   order: z.number(),
 });
 
