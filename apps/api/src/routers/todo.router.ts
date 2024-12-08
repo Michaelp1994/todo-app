@@ -9,12 +9,18 @@ import {
   updateSchema,
 } from "../validators/todo.schema";
 import { todoTable } from "../db/schemas/todo";
+import { and, eq, isNull } from "drizzle-orm";
 
 export default router({
-  getAll: authProcedure.input(getAllSchema).query(async () => {
-    throw new TRPCError({
-      code: "NOT_IMPLEMENTED",
-    });
+  getAll: authProcedure.input(getAllSchema).query(async ({ ctx }) => {
+    const todos = await ctx.db
+      .select()
+      .from(todoTable)
+      .where(
+        and(eq(todoTable.userId, ctx.user.id), isNull(todoTable.archivedAt))
+      )
+      .orderBy(todoTable.createdAt);
+    return todos;
   }),
   getById: authProcedure.input(getByIdSchema).query(async () => {
     throw new TRPCError({
