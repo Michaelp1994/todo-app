@@ -46,7 +46,7 @@ jobs:
         run: pnpm typecheck
 
   migrate_deploy_staging:
-    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-todo-app-staging-${{ github.run_id }}-${{ github.run_attempt }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-staging
 

@@ -6,7 +6,7 @@ on:
 
 jobs:
   migrate_deploy_production:
-    runs-on: codebuild-todo-app-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-todo-app-production-${{ github.run_id }}-${{ github.run_attempt }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-migrate-deploy-production
     env: 
