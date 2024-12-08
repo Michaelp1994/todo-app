@@ -19,9 +19,7 @@ export const todoTable = pgTable("todo", {
   dueDate: date(),
   important: boolean().notNull().default(false),
   attachmentUrl: text(),
-  listId: integer()
-    .notNull()
-    .references(() => listTable.id),
+  listId: integer().references(() => listTable.id),
   order: integer().notNull(),
   userId: integer()
     .notNull()
