@@ -3,6 +3,7 @@ import styles from "./Todo.module.css";
 import UpdateTodoForm from "./UpdateTodoForm";
 import { useState } from "react";
 import Button from "./ui/Button";
+import ArchiveTodoButton from "./ArchiveTodoButton";
 
 interface TodoProps {
   todo: RouterOutput["todo"]["getAll"][0];
@@ -21,6 +22,7 @@ export default function Todo({ todo }: TodoProps) {
       <p>Completed: {todo.completed ? "Yes" : "No"}</p>
       <p>Important: {todo.important ? "Yes" : "No"}</p>
       <Button onClick={() => setIsUpdating((value) => !value)}>Update</Button>
+      <ArchiveTodoButton todoId={todo.id}>Archive</ArchiveTodoButton>
     </div>
   );
 }
