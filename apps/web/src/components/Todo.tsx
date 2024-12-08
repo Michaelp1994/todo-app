@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "./ui/Button";
 import ArchiveTodoButton from "./ArchiveTodoButton";
 import CompleteTodoButton from "./CompleteTodoButton";
+import DeleteTodoButton from "./DeleteTodoButton";
 
 interface TodoProps {
   todo: RouterOutput["todo"]["getAll"][0];
@@ -27,6 +28,7 @@ export default function Todo({ todo }: TodoProps) {
       )}
       <Button onClick={() => setIsUpdating((value) => !value)}>Update</Button>
       <ArchiveTodoButton todoId={todo.id}>Archive</ArchiveTodoButton>
+      <DeleteTodoButton todoId={todo.id}>Delete</DeleteTodoButton>
     </div>
   );
 }
