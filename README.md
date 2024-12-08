@@ -10,30 +10,30 @@
 - [x] setup ci/cd: format, lint, test, typecheck
 - [x] authentication
 
-- [ ] All todos
+- [x] All todos
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Page
 
 - [ ] View todo
 
   - [ ] API
-  - [ ] Page
+  - [x] Component
 
-- [ ] Add todo
+- [x] Add todo
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Component
 
-- [ ] Update todo
+- [x] Update todo
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Component
 
-- [ ] Delete todo
+- [x] Delete todo
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Component
 
 - [ ] All Lists
 
