@@ -7,12 +7,14 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 
 export const authProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session) {
+  if (!ctx.session || !ctx.user) {
     throw new Error("Unauthorized");
   }
+
   return next({
     ctx: {
       session: ctx.session,
+      user: ctx.user,
     },
   });
 });
