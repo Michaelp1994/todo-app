@@ -58,9 +58,12 @@ export default router({
         .execute();
       return [archivedTodo];
     }),
-  delete: authProcedure.input(deleteSchema).mutation(async () => {
-    throw new TRPCError({
-      code: "NOT_IMPLEMENTED",
-    });
+  delete: authProcedure.input(deleteSchema).mutation(async ({ ctx, input }) => {
+    const deletedTodo = await ctx.db
+      .delete(todoTable)
+      .where(and(eq(todoTable.id, input.id), eq(todoTable.userId, ctx.user.id)))
+      .returning()
+      .execute();
+    return [deletedTodo];
   }),
 });
