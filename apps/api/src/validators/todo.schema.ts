@@ -19,7 +19,7 @@ export const createSchema = z.object({
   order: z.number(),
 });
 
-export const updateSchema = createSchema.extend({
+export const updateSchema = createSchema.partial().extend({
   id: todoId,
 });
 

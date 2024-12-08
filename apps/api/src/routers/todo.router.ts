@@ -35,10 +35,15 @@ export default router({
       .execute();
     return newTodo;
   }),
-  update: authProcedure.input(updateSchema).mutation(async () => {
-    throw new TRPCError({
-      code: "NOT_IMPLEMENTED",
-    });
+  update: authProcedure.input(updateSchema).mutation(async ({ ctx, input }) => {
+    const { id, ...values } = input;
+    const updatedTodo = await ctx.db
+      .update(todoTable)
+      .set(values)
+      .where(and(eq(todoTable.id, id), eq(todoTable.userId, ctx.user.id)))
+      .returning()
+      .execute();
+    return updatedTodo;
   }),
   archive: authProcedure.input(archiveSchema).mutation(async () => {
     throw new TRPCError({
