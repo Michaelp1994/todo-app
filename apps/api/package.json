@@ -2,12 +2,14 @@
   "name": "@todo/api",
   "type": "module",
   "exports": {
-    ".": "./src/router.ts"
+    ".": "./src/router.ts",
+    "./db": "./src/db/index.ts",
+    "./schemas/*": "./src/db/schemas/*.ts"
   },
   "scripts": {
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
