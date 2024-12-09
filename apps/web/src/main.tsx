@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { ApiProvider } from "./contexts/api/ApiProvider";
 import { AuthProvider } from "./contexts/auth/AuthProvider";
 import Router from "./router";
-import "./global.css";
+import "./reset.css";
 
 const rootElement = document.getElementById("root");
 
