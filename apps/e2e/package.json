@@ -1,10 +1,13 @@
 {
   "name": "@todo/e2e",
+  "type": "module",
   "scripts": {
     "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@playwright/test": "^1.49.0",
+    "@todo/api": "workspace:*",
     "@types/node": "^22.10.1"
   }
 }
