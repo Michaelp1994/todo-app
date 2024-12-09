@@ -3,15 +3,14 @@ import { useAuth } from "../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
 export function AuthLayout() {
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!user) {
       navigate("/login");
     }
-  }, [user, isLoading, navigate]);
+  }, [user, navigate]);
 
-  if (isLoading) return <div>Loading...</div>;
   return user ? <Outlet /> : null;
 }
