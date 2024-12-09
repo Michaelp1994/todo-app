@@ -19,9 +19,15 @@ export default function RegisterForm() {
   });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setMessage(`Error: Passwords do not match.`);
+      return;
+    }
     registerMutation.mutate({ email: email, password });
   }
 
@@ -38,6 +44,13 @@ export default function RegisterForm() {
         autoComplete="new-password"
         onChange={(e) => setPassword(e.target.value)}
         label="Password"
+        type="password"
+      />
+      <Input
+        value={confirmPassword}
+        autoComplete="new-password"
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        label="Confirm Password"
         type="password"
       />
       <Button type="submit" disabled={registerMutation.isLoading}>
