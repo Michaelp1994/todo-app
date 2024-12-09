@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import { api } from "../utils/api";
+import Form from "./ui/Form";
 
 export default function LoginForm() {
   const utils = api.useUtils();
@@ -24,12 +25,12 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Input
         value={email}
         autoComplete="email"
         onChange={(e) => setEmail(e.target.value)}
-        label="email"
+        label="Email"
       />
       <Input
         value={password}
@@ -42,6 +43,6 @@ export default function LoginForm() {
         {loginMutation.isLoading ? "Loading..." : "Login"}
       </Button>
       {message && <p>{message}</p>}
-    </form>
+    </Form>
   );
 }
