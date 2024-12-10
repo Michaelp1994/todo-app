@@ -1,4 +1,4 @@
-import CreateTodoForm from "../components/CreateTodoForm";
+import CreateTodoForm from "../components/forms/CreateTodoForm";
 import Todo from "../components/Todo";
 import { api } from "../utils/api";
 

@@ -1,6 +1,6 @@
 import type { RouterOutput } from "@todo/api";
 import styles from "./Todo.module.css";
-import UpdateTodoForm from "./UpdateTodoForm";
+import UpdateTodoForm from "./forms/UpdateTodoForm";
 import { useState } from "react";
 import Button from "./ui/Button";
 import ArchiveTodoButton from "./ArchiveTodoButton";

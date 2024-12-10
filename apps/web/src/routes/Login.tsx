@@ -1,5 +1,5 @@
 import CenteredPage from "../components/CenteredPage";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/forms/LoginForm";
 import Card from "../components/ui/Card";
 
 export default function Login() {

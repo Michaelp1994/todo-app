@@ -1,8 +1,9 @@
 import { useState } from "react";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
-import { api } from "../utils/api";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import { api } from "../../utils/api";
 import type { RouterOutput } from "@todo/api";
+import { Form } from "../ui/Form";
 
 interface UpdateTodoFormProps {
   todo: RouterOutput["todo"]["getAll"][0];
@@ -47,7 +48,7 @@ export default function UpdateTodoForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -82,6 +83,6 @@ export default function UpdateTodoForm({
         {updateMutation.isLoading ? "Loading..." : "Update"}
       </Button>
       {message && <p>{message}</p>}
-    </form>
+    </Form>
   );
 }
