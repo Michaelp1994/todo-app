@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import { api } from "../utils/api";
+import { Form, FormActions } from "./ui/Form";
 
 export default function CreateTodoForm() {
   const utils = api.useUtils();
@@ -38,7 +39,7 @@ export default function CreateTodoForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -62,10 +63,13 @@ export default function CreateTodoForm() {
         label="Important"
         type="checkbox"
       />
-      <Button type="submit" disabled={createMutation.isLoading}>
-        {createMutation.isLoading ? "Loading..." : "Create"}
-      </Button>
       {message && <p>{message}</p>}
-    </form>
+
+      <FormActions>
+        <Button type="submit" disabled={createMutation.isLoading}>
+          {createMutation.isLoading ? "Loading..." : "Create"}
+        </Button>
+      </FormActions>
+    </Form>
   );
 }

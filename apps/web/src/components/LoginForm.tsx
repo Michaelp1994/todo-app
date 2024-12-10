@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import { api } from "../utils/api";
-import Form from "./ui/Form";
+import { Form, FormActions } from "./ui/Form";
 
 export default function LoginForm() {
   const utils = api.useUtils();
@@ -39,10 +39,12 @@ export default function LoginForm() {
         label="Password"
         type="password"
       />
-      <Button disabled={loginMutation.isLoading} type="submit">
-        {loginMutation.isLoading ? "Loading..." : "Login"}
-      </Button>
       {message && <p>{message}</p>}
+      <FormActions>
+        <Button disabled={loginMutation.isLoading} type="submit">
+          {loginMutation.isLoading ? "Loading..." : "Login"}
+        </Button>
+      </FormActions>
     </Form>
   );
 }

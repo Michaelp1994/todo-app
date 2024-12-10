@@ -2,8 +2,7 @@ import { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import { api } from "../utils/api";
-import Form from "./ui/Form";
-
+import { Form, FormActions } from "./ui/Form";
 export default function RegisterForm() {
   const utils = api.useUtils();
 
@@ -53,10 +52,12 @@ export default function RegisterForm() {
         label="Confirm Password"
         type="password"
       />
-      <Button type="submit" disabled={registerMutation.isLoading}>
-        {registerMutation.isLoading ? "Loading..." : "Register"}
-      </Button>
       {message && <p>{message}</p>}
+      <FormActions>
+        <Button type="submit" disabled={registerMutation.isLoading}>
+          {registerMutation.isLoading ? "Loading..." : "Register"}
+        </Button>
+      </FormActions>
     </Form>
   );
 }
