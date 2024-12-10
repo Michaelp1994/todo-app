@@ -1,11 +1,14 @@
+import CenteredPage from "../components/CenteredPage";
 import RegisterForm from "../components/RegisterForm";
+import Card from "../components/ui/Card";
 
 export default function Register() {
   return (
-    <div>
-      <h1>Register</h1>
-      <p>Welcome to the Register page!</p>
-      <RegisterForm />
-    </div>
+    <CenteredPage>
+      <Card>
+        <h1>Register</h1>
+        <RegisterForm />
+      </Card>
+    </CenteredPage>
   );
 }

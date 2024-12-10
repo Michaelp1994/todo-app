@@ -1,11 +1,14 @@
+import CenteredPage from "../components/CenteredPage";
 import LoginForm from "../components/LoginForm";
+import Card from "../components/ui/Card";
 
 export default function Login() {
   return (
-    <div>
-      <h1>Login</h1>
-      <p>Welcome to the Login page!</p>
-      <LoginForm />
-    </div>
+    <CenteredPage>
+      <Card>
+        <h1>Login</h1>
+        <LoginForm />
+      </Card>
+    </CenteredPage>
   );
 }
