@@ -2,7 +2,12 @@ import { z } from "zod";
 
 export const todoId = z.number().int();
 
-export const getAllSchema = z.object({});
+export const getAllSchema = z.object({
+  archived: z.boolean().optional(),
+  important: z.boolean().optional(),
+});
+
+export const getWeekSchema = z.object({});
 
 export const getByIdSchema = z.object({
   id: todoId,
@@ -30,3 +35,5 @@ export const archiveSchema = z.object({
 export const deleteSchema = z.object({
   id: todoId,
 });
+
+export const deleteAllArchivedSchema = z.object({});
