@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
+import styles from "./AuthLayout.module.css";
+import SideBar from "./components/SideBar";
+
 export function AuthLayout() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -12,5 +15,16 @@ export function AuthLayout() {
     }
   }, [user, navigate]);
 
-  return user ? <Outlet /> : null;
+  if (!user) {
+    return;
+  }
+
+  return (
+    <div className={styles.container}>
+      <SideBar />
+      <main className={styles.main}>
+        <Outlet />
+      </main>
+    </div>
+  );
 }
