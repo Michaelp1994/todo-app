@@ -1,33 +1,35 @@
 import { useAuth } from "../contexts/auth/useAuth";
 import LogoutButton from "./LogoutButton";
+import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const { user } = useAuth();
   return (
-    <header>
-      <nav>
-        <ul>
+    <header className={styles.container}>
+      <nav className={styles.menu}>
+        <ul className={styles.menuList}>
           <li>
             <a href="/">Home</a>
           </li>
-
           <li>
             <a href="/todos">Todos</a>
           </li>
-          <li>
-            {user ? (
+        </ul>
+        <ul className={styles.menuList}>
+          {user ? (
+            <li>
               <LogoutButton />
-            ) : (
-              <>
-                <li>
-                  <a href="/login">Login</a>
-                </li>
-                <li>
-                  <a href="/register">Register</a>
-                </li>
-              </>
-            )}
-          </li>
+            </li>
+          ) : (
+            <>
+              <li>
+                <a href="/login">Login</a>
+              </li>
+              <li>
+                <a href="/register">Register</a>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>
