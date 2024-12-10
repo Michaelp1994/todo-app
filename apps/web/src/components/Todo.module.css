@@ -1,9 +1,32 @@
+.container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .todo {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px;
-  margin: 10px;
-  background-color: var(--card);
+  flex-grow: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.todoInfo {
+  flex-grow: 1;
+}
+
+.todoActions {
+}
+
+.todoTitle {
+}
+
+.strikeThrough {
+  text-decoration: line-through;
+}
+
+.todoDescription {
+  color: var(--muted-foreground);
 }
 
 .buttonRow {

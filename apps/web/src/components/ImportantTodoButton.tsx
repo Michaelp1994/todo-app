@@ -1,16 +1,16 @@
-import { CheckCircle, Circle } from "@phosphor-icons/react";
+import { Star } from "@phosphor-icons/react";
 import { api } from "../utils/api";
 import Button from "./ui/Button";
 
-interface CompleteTodoButtonProps {
+interface ImportantTodoButtonProps {
   todoId: number;
-  isComplete: boolean;
+  important: boolean;
 }
 
-export default function CompleteTodoButton({
+export default function ImportantTodoButton({
   todoId,
-  isComplete,
-}: CompleteTodoButtonProps) {
+  important,
+}: ImportantTodoButtonProps) {
   const utils = api.useUtils();
   const completeMutation = api.todo.update.useMutation({
     async onSuccess() {
@@ -24,12 +24,12 @@ export default function CompleteTodoButton({
   return (
     <Button
       onClick={() =>
-        completeMutation.mutate({ id: todoId, completed: !isComplete })
+        completeMutation.mutate({ id: todoId, important: !important })
       }
       disabled={completeMutation.isLoading}
       variant="icon"
     >
-      {isComplete ? <CheckCircle size={24} /> : <Circle size={24} />}
+      <Star weight={important ? "fill" : "regular"} />
     </Button>
   );
 }

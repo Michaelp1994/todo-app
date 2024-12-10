@@ -1,41 +1,47 @@
 import type { RouterOutput } from "@todo/api";
 import styles from "./Todo.module.css";
-import UpdateTodoForm from "./forms/UpdateTodoForm";
-import { useState } from "react";
-import Button from "./ui/Button";
 import ArchiveTodoButton from "./ArchiveTodoButton";
 import CompleteTodoButton from "./CompleteTodoButton";
-import DeleteTodoButton from "./DeleteTodoButton";
 import Card from "./ui/Card";
+import ImportantTodoButton from "./ImportantTodoButton";
+import UpdateTodoButton from "./UpdateTodoButton";
+import { cn } from "../utils/cn";
+import { DotsSixVertical } from "@phosphor-icons/react";
 
 interface TodoProps {
   todo: RouterOutput["todo"]["getAll"][0];
 }
 
 export default function Todo({ todo }: TodoProps) {
-  const [isUpdating, setIsUpdating] = useState(false);
-  if (isUpdating) {
-    return (
-      <Card>
-        <UpdateTodoForm todo={todo} onFinish={() => setIsUpdating(false)} />
-      </Card>
-    );
-  }
   return (
-    <Card>
-      <h3>Title: {todo.title}</h3>
-      <p>Description: {todo.description}</p>
-      <p>Due Date: {todo.dueDate}</p>
-      <p>Completed: {todo.completed ? "Yes" : "No"}</p>
-      <p>Important: {todo.important ? "Yes" : "No"}</p>
-      <div className={styles.buttonRow}>
-        {!todo.completed && (
-          <CompleteTodoButton todoId={todo.id}>Complete</CompleteTodoButton>
-        )}
-        <Button onClick={() => setIsUpdating((value) => !value)}>Update</Button>
-        <ArchiveTodoButton todoId={todo.id}>Archive</ArchiveTodoButton>
-        <DeleteTodoButton todoId={todo.id}>Delete</DeleteTodoButton>
-      </div>
-    </Card>
+    <div className={styles.container}>
+      <DotsSixVertical size={32} />
+      <Card className={styles.todo}>
+        <CompleteTodoButton todoId={todo.id} isComplete={todo.completed} />
+        <div className={styles.todoInfo}>
+          <h3
+            className={cn(
+              styles.todoTitle,
+              todo.completed && styles.strikeThrough
+            )}
+          >
+            {todo.title}
+          </h3>
+          <p
+            className={cn(
+              styles.todoDescription,
+              todo.completed && styles.strikeThrough
+            )}
+          >
+            {todo.description}
+          </p>
+        </div>
+        <div className={styles.todoActions}>
+          <UpdateTodoButton todoId={todo.id} />
+          <ImportantTodoButton todoId={todo.id} important={todo.important} />
+          <ArchiveTodoButton todoId={todo.id} />
+        </div>
+      </Card>
+    </div>
   );
 }
