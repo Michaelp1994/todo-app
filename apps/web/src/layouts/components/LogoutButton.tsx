@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
-import { api } from "../utils/api";
-import Button from "./ui/Button";
+import { api } from "../../utils/api";
+import Button from "../../components/ui/Button";
 
 export default function LogoutButton() {
   const utils = api.useUtils();

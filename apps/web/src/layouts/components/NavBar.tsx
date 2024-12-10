@@ -1,6 +1,17 @@
-import { useAuth } from "../contexts/auth/useAuth";
+import { useAuth } from "../../contexts/auth/useAuth";
 import LogoutButton from "./LogoutButton";
 import styles from "./NavBar.module.css";
+import { Link, NavLink } from "react-router";
+const menuItems = [
+  {
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/todos",
+    label: "Todos",
+  },
+];
 
 export default function NavBar() {
   const { user } = useAuth();
@@ -8,12 +19,13 @@ export default function NavBar() {
     <header className={styles.container}>
       <nav className={styles.menu}>
         <ul className={styles.menuList}>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/todos">Todos</a>
-          </li>
+          {menuItems.map((menuItem) => (
+            <li className={styles.menuListItem} key={menuItem.href}>
+              <NavLink to={menuItem.href} className={styles.menuListItemLink}>
+                {menuItem.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
         <ul className={styles.menuList}>
           {user ? (
@@ -23,10 +35,10 @@ export default function NavBar() {
           ) : (
             <>
               <li>
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <a href="/register">Register</a>
+                <Link to="/register">Register</Link>
               </li>
             </>
           )}
