@@ -1,2 +1,2 @@
-/** Join ClassName utility fn  */
+/** Join ClassName utility  */
 export { default as cn } from "classnames";

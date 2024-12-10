@@ -1,12 +1,13 @@
+import { cn } from "../../utils/cn";
 import styles from "./Form.module.css";
 
 interface FormProps extends React.HTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
 }
 
-export function Form({ children, ...props }: FormProps) {
+export function Form({ children, className, ...props }: FormProps) {
   return (
-    <form className={styles.container} {...props}>
+    <form className={cn(styles.container, className)} {...props}>
       {children}
     </form>
   );
@@ -16,9 +17,13 @@ interface FormActionsProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export function FormActions({ children, ...props }: FormActionsProps) {
+export function FormActions({
+  children,
+  className,
+  ...props
+}: FormActionsProps) {
   return (
-    <div className={styles.formActions} {...props}>
+    <div className={cn(styles.formActions, className)} {...props}>
       {children}
     </div>
   );
