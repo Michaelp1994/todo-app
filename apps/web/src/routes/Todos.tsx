@@ -1,19 +1,11 @@
-import CreateTodoForm from "../components/forms/CreateTodoForm";
-import Todo from "../components/Todo";
-import { api } from "../utils/api";
+import Container from "../components/layouts/Container";
+import TodoList from "../components/TodoList";
 
 export default function Todos() {
-  const { data, isLoading, isError } = api.todo.getAll.useQuery({});
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error!</div>;
   return (
-    <div>
-      <h1>Todos</h1>
-      <p>Welcome to the Todos page!</p>
-      {data.map((todo) => (
-        <Todo key={todo.id} todo={todo} />
-      ))}
-      <CreateTodoForm />
-    </div>
+    <Container>
+      <h1>Today</h1>
+      <TodoList />
+    </Container>
   );
 }
