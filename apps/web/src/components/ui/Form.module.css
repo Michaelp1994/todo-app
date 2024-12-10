@@ -6,5 +6,6 @@
 
 .formActions {
   display: flex;
+  gap: 4px;
   justify-content: end;
 }
