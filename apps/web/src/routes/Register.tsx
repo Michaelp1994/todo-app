@@ -1,14 +1,14 @@
-import CenteredPage from "../components/CenteredPage";
+import CenterCard from "../components/layouts/CenterCard";
 import RegisterForm from "../components/forms/RegisterForm";
 import Card from "../components/ui/Card";
 
 export default function Register() {
   return (
-    <CenteredPage>
+    <CenterCard>
       <Card>
         <h1>Register</h1>
         <RegisterForm />
       </Card>
-    </CenteredPage>
+    </CenterCard>
   );
 }
