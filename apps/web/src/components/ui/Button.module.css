@@ -3,12 +3,11 @@
   padding: 10px 20px;
   border-radius: var(--radius);
   cursor: pointer;
+}
 
-  &:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: not-allowed;
-  }
+.skeleton {
+  height: 44px;
+  width: 85px;
 }
 
 .primaryButton {
@@ -16,6 +15,11 @@
   color: var(--primary-foreground);
   &:hover {
     background-color: #0056b3;
+  }
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
   }
 }
 
@@ -26,11 +30,21 @@
   &:hover {
     background-color: #0056b3;
   }
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
 }
 
 .iconButton {
+  padding: 1rem;
   background-color: transparent;
   &:hover {
-    background-color: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
