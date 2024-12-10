@@ -14,7 +14,4 @@
 .menuList {
   display: flex;
   gap: 10px;
-  & li {
-    list-style: none;
-  }
 }
