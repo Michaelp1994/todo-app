@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import styles from "./SideBar.module.css";
 import { Divider } from "../../components/ui/Divider";
+import LogoutButton from "./LogoutButton";
 
 const listItems = [
   {
@@ -13,7 +14,7 @@ const listItems = [
   },
   {
     href: "/todos/week",
-    label: "Week",
+    label: "Next 5 days",
   },
   {
     href: "/todos/archived",
@@ -36,6 +37,10 @@ export default function SideBar() {
       </ul>
       <Divider />
       <h3 className={styles.menuTitle}>Lists</h3>
+      <div className={styles.spacer} />
+      <div className={styles.bottomContainer}>
+        <LogoutButton />
+      </div>
     </div>
   );
 }

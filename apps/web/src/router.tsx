@@ -15,14 +15,14 @@ export default function Router() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/todos" element={<AuthLayout />}>
-            <Route index element={<Todos />} />
-            <Route path="important" element={<ImportantTodos />} />
-            <Route path="week" element={<WeekTodos />} />
-            <Route path="archived" element={<ArchivedTodos />} />
-          </Route>
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/todos" element={<AuthLayout />}>
+          <Route index element={<Todos />} />
+          <Route path="important" element={<ImportantTodos />} />
+          <Route path="week" element={<WeekTodos />} />
+          <Route path="archived" element={<ArchivedTodos />} />
         </Route>
       </Routes>
     </BrowserRouter>
