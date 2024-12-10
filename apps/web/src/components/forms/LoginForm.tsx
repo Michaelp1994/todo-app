@@ -3,16 +3,18 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { api } from "../../utils/api";
 import { Form, FormActions } from "../ui/Form";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
   const utils = api.useUtils();
+  const navigate = useNavigate();
   const loginMutation = api.auth.login.useMutation({
     async onSuccess() {
       await utils.auth.validate.invalidate();
       setMessage("User logged in");
+      await navigate("/todos");
     },
     onError(error) {
-      console.error(error);
       setMessage("Error: " + error.message);
     },
   });

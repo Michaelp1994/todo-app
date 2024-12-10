@@ -3,19 +3,23 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { api } from "../../utils/api";
 import { Form, FormActions } from "../ui/Form";
+import { useNavigate } from "react-router";
+
 export default function RegisterForm() {
   const utils = api.useUtils();
-
+  const navigate = useNavigate();
   const registerMutation = api.auth.register.useMutation({
     async onSuccess() {
       await utils.auth.validate.invalidate();
       setMessage("Registered!");
+      await navigate("/todos");
     },
     onError(error) {
       console.error(error);
       setMessage(`Error: ${error.message} `);
     },
   });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
