@@ -5,17 +5,23 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthLayout } from "./layouts/AuthLayout";
 import Todos from "./pages/Todos";
+import ImportantTodos from "./pages/ImportantTodos";
+import WeekTodos from "./pages/WeekTodos";
+import ArchivedTodos from "./pages/ArchivedTodos";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
+          <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/todos" element={<AuthLayout />}>
             <Route index element={<Todos />} />
+            <Route path="important" element={<ImportantTodos />} />
+            <Route path="week" element={<WeekTodos />} />
+            <Route path="archived" element={<ArchivedTodos />} />
           </Route>
         </Route>
       </Routes>
