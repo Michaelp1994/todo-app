@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   border-bottom: 1px solid var(--border);
-  padding: 10px;
+  padding-inline: 2rem;
   background-color: white;
 }
 
@@ -13,6 +13,7 @@
 
 .menuList {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -20,8 +21,12 @@
 }
 
 .menuListItemLink {
-  padding: 10px;
+  display: block;
+  padding-block: 1rem;
+  padding-inline: 2rem;
   border-radius: 0.25rem;
+  color: black;
+  text-decoration: none;
   &:hover {
     background-color: var(--muted);
   }

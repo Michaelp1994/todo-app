@@ -34,11 +34,15 @@ export default function NavBar() {
             </li>
           ) : (
             <>
-              <li>
-                <Link to="/login">Login</Link>
+              <li className={styles.menuListItem}>
+                <Link to="/login" className={styles.menuListItemLink}>
+                  Login
+                </Link>
               </li>
-              <li>
-                <Link to="/register">Register</Link>
+              <li className={styles.menuListItem}>
+                <Link to="/register" className={styles.menuListItemLink}>
+                  Register
+                </Link>
               </li>
             </>
           )}
