@@ -5,7 +5,7 @@ import Card from "../components/ui/Card";
 export default function Login() {
   return (
     <CenterCard>
-      <Card style={{ width: "500px" }}>
+      <Card>
         <h1>Login</h1>
         <LoginForm />
       </Card>
