@@ -2,16 +2,29 @@ import { useEffect } from "react";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
+import styles from "./AuthLayout.module.css";
+import SideBar from "./components/SideBar";
+
 export function AuthLayout() {
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!user) {
       navigate("/login");
     }
-  }, [user, isLoading, navigate]);
+  }, [user, navigate]);
 
-  if (isLoading) return <div>Loading...</div>;
-  return user ? <Outlet /> : null;
+  if (!user) {
+    return;
+  }
+
+  return (
+    <div className={styles.container}>
+      <SideBar />
+      <main className={styles.main}>
+        <Outlet />
+      </main>
+    </div>
+  );
 }

@@ -8,6 +8,13 @@
       "when": 1733402353429,
       "tag": "0000_magical_praxagora",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1733883097479,
+      "tag": "0001_careful_terrax",
+      "breakpoints": true
     }
   ]
 }

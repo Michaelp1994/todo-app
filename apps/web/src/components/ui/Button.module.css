@@ -1,18 +1,50 @@
-.button {
-  background-color: #007bff;
-  color: white;
+.baseButton {
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: var(--radius);
   cursor: pointer;
+}
+
+.skeleton {
+  height: 44px;
+  width: 85px;
+}
+
+.primaryButton {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  &:hover {
+    background-color: #0056b3;
+  }
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+}
+
+.secondaryButton {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
 
   &:hover {
     background-color: #0056b3;
   }
-
   &:disabled {
     background-color: #ccc;
     color: #666;
+    cursor: not-allowed;
+  }
+}
+
+.iconButton {
+  padding: 1rem;
+  background-color: transparent;
+  &:hover {
+    color: var(--muted-foreground);
+  }
+
+  &:disabled {
     cursor: not-allowed;
   }
 }

@@ -1,34 +1,66 @@
 import type { RouterOutput } from "@todo/api";
 import styles from "./Todo.module.css";
-import UpdateTodoForm from "./UpdateTodoForm";
-import { useState } from "react";
-import Button from "./ui/Button";
 import ArchiveTodoButton from "./ArchiveTodoButton";
 import CompleteTodoButton from "./CompleteTodoButton";
-import DeleteTodoButton from "./DeleteTodoButton";
+import Card from "./ui/Card";
+import ImportantTodoButton from "./ImportantTodoButton";
+import UpdateTodoModal from "./UpdateTodoModal";
+import { cn } from "../utils/cn";
+import {
+  CalendarBlank,
+  DotsSixVertical,
+  TagChevron,
+} from "@phosphor-icons/react";
+import { format } from "date-fns";
+import { enAU } from "date-fns/locale";
 
 interface TodoProps {
-  todo: RouterOutput["todo"]["getAll"][0];
+  todo: RouterOutput["todo"]["getAllToday"][0];
 }
 
 export default function Todo({ todo }: TodoProps) {
-  const [isUpdating, setIsUpdating] = useState(false);
-  if (isUpdating) {
-    return <UpdateTodoForm todo={todo} onFinish={() => setIsUpdating(false)} />;
-  }
   return (
-    <div className={styles.todo}>
-      <h3>{todo.title}</h3>
-      <p>{todo.description}</p>
-      <p>Due: {todo.dueDate}</p>
-      <p>Completed: {todo.completed ? "Yes" : "No"}</p>
-      <p>Important: {todo.important ? "Yes" : "No"}</p>
-      {!todo.completed && (
-        <CompleteTodoButton todoId={todo.id}>Complete</CompleteTodoButton>
-      )}
-      <Button onClick={() => setIsUpdating((value) => !value)}>Update</Button>
-      <ArchiveTodoButton todoId={todo.id}>Archive</ArchiveTodoButton>
-      <DeleteTodoButton todoId={todo.id}>Delete</DeleteTodoButton>
+    <div className={styles.container}>
+      <div style={{ cursor: "grab" }}>
+        <DotsSixVertical size={32} />
+      </div>
+
+      <Card className={styles.todo}>
+        <CompleteTodoButton todoId={todo.id} isComplete={todo.completed} />
+        <div className={styles.todoInfo}>
+          <h3
+            className={cn(
+              styles.todoTitle,
+              todo.completed && styles.strikeThrough
+            )}
+          >
+            {todo.title}
+          </h3>
+          <p
+            className={cn(
+              styles.todoDescription,
+              todo.completed && styles.strikeThrough
+            )}
+          >
+            {todo.description}
+          </p>
+          <div className={styles.todoDueDate}>
+            <CalendarBlank weight="thin" size={24} />
+            <p>
+              {todo.dueDate
+                ? format(todo.dueDate, "P", { locale: enAU })
+                : "N/A"}
+            </p>
+            <TagChevron weight="thin" size={24} />
+            <p>{todo.list ? todo.list.title : "N/A"}</p>
+          </div>
+        </div>
+        <div className={styles.todoActions}>
+          <UpdateTodoModal todoId={todo.id} />
+          <ImportantTodoButton todoId={todo.id} important={todo.important} />
+          <ArchiveTodoButton todoId={todo.id} />
+        </div>
+      </Card>
     </div>
   );
 }

@@ -30,7 +30,11 @@ export default router({
     return true;
   }),
   validate: publicProcedure.query(async ({ ctx }) => {
-    return ctx.user;
+    if (!ctx.user) return null;
+    return {
+      id: ctx.user.id,
+      email: ctx.user.email,
+    };
   }),
   logout: authProcedure.mutation(async ({ ctx }) => {
     await invalidateSession(ctx.session.id, ctx.db);

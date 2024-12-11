@@ -2,11 +2,9 @@ import { api } from "../../utils/api";
 import { AuthContext } from "./AuthContext";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data: user, isLoading } = api.auth.validate.useQuery();
+  const [user] = api.auth.validate.useSuspenseQuery();
 
   return (
-    <AuthContext.Provider value={{ user, isLoading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 }

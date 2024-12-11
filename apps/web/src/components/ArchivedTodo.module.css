@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.todo {
+  flex-grow: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  &:hover {
+    background-color: var(--muted);
+  }
+}
+
+.todoInfo {
+  flex-grow: 1;
+}
+
+.todoActions {
+}
+
+.todoTitle {
+}
+
+.strikeThrough {
+  text-decoration: line-through;
+}
+
+.todoDescription {
+  color: var(--muted-foreground);
+}
+
+.buttonRow {
+  padding-block: 12px;
+  display: flex;
+  gap: 4px;
+}

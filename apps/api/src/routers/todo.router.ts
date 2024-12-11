@@ -1,36 +1,96 @@
-import { TRPCError } from "@trpc/server";
 import { authProcedure, router } from "../trpc";
 import {
   archiveSchema,
   createSchema,
+  deleteAllArchivedSchema,
   deleteSchema,
+  getAllByListSlugSchema,
   getAllSchema,
   getByIdSchema,
+  getWeekSchema,
   updateSchema,
 } from "../validators/todo.schema";
 import { todoTable } from "../db/schemas/todo";
-import { and, eq, isNull } from "drizzle-orm";
+import {
+  and,
+  between,
+  eq,
+  getTableColumns,
+  isNotNull,
+  isNull,
+} from "drizzle-orm";
+import { addDays, format } from "date-fns";
+import { groupTodosByDate } from "../utils/groupTodosByDueDate";
+import { listTable } from "../db/schemas/list";
+
+const todoColumns = getTableColumns(todoTable);
 
 export default router({
-  getAll: authProcedure.input(getAllSchema).query(async ({ ctx }) => {
+  getAllToday: authProcedure
+    .input(getAllSchema)
+    .query(async ({ ctx, input }) => {
+      const todos = await ctx.db
+        .select({ ...todoColumns, list: listTable })
+        .from(todoTable)
+        .leftJoin(listTable, eq(listTable.id, todoTable.listId))
+        .where(
+          and(
+            eq(todoTable.userId, ctx.user.id),
+            input.important ? eq(todoTable.important, true) : undefined,
+            input.archived
+              ? isNotNull(todoTable.archivedAt)
+              : isNull(todoTable.archivedAt)
+          )
+        )
+        .orderBy(todoTable.createdAt);
+      return todos;
+    }),
+  getAllByListSlug: authProcedure
+    .input(getAllByListSlugSchema)
+    .query(async ({ ctx, input }) => {
+      const todos = await ctx.db
+        .select({ ...todoColumns, list: listTable })
+        .from(todoTable)
+        .innerJoin(listTable, eq(listTable.id, todoTable.listId))
+        .where(
+          and(eq(todoTable.userId, ctx.user.id), eq(listTable.slug, input.slug))
+        )
+        .orderBy(todoTable.createdAt);
+      return todos;
+    }),
+  getWeek: authProcedure.input(getWeekSchema).query(async ({ ctx }) => {
+    const today = new Date();
+    const fiveDays = addDays(today, 5);
     const todos = await ctx.db
-      .select()
+      .select({ ...todoColumns, list: listTable })
       .from(todoTable)
+      .leftJoin(listTable, eq(listTable.id, todoTable.listId))
       .where(
-        and(eq(todoTable.userId, ctx.user.id), isNull(todoTable.archivedAt))
+        and(
+          eq(todoTable.userId, ctx.user.id),
+          isNull(todoTable.archivedAt),
+          between(
+            todoTable.dueDate,
+            format(today, "yyyy-MM-dd"),
+            format(fiveDays, "yyyy-MM-dd")
+          )
+        )
       )
       .orderBy(todoTable.createdAt);
-    return todos;
+    return groupTodosByDate(todos);
   }),
-  getById: authProcedure.input(getByIdSchema).query(async () => {
-    throw new TRPCError({
-      code: "NOT_IMPLEMENTED",
-    });
+  getById: authProcedure.input(getByIdSchema).query(async ({ input, ctx }) => {
+    const [todo] = await ctx.db
+      .select()
+      .from(todoTable)
+      .where(and(eq(todoTable.userId, ctx.user.id), eq(todoTable.id, input.id)))
+      .orderBy(todoTable.createdAt);
+    return todo;
   }),
   create: authProcedure.input(createSchema).mutation(async ({ ctx, input }) => {
     const [newTodo] = await ctx.db
       .insert(todoTable)
-      .values({ ...input, userId: ctx.user.id })
+      .values({ ...input, order: 1, userId: ctx.user.id })
       .returning()
       .execute();
     return newTodo;
@@ -58,6 +118,19 @@ export default router({
         .execute();
       return [archivedTodo];
     }),
+  unarchive: authProcedure
+    .input(archiveSchema)
+    .mutation(async ({ ctx, input }) => {
+      const archivedTodo = await ctx.db
+        .update(todoTable)
+        .set({ archivedAt: null })
+        .where(
+          and(eq(todoTable.id, input.id), eq(todoTable.userId, ctx.user.id))
+        )
+        .returning()
+        .execute();
+      return [archivedTodo];
+    }),
   delete: authProcedure.input(deleteSchema).mutation(async ({ ctx, input }) => {
     const deletedTodo = await ctx.db
       .delete(todoTable)
@@ -66,4 +139,19 @@ export default router({
       .execute();
     return [deletedTodo];
   }),
+  deleteAllArchived: authProcedure
+    .input(deleteAllArchivedSchema)
+    .mutation(async ({ ctx }) => {
+      const deletedTodo = await ctx.db
+        .delete(todoTable)
+        .where(
+          and(
+            isNotNull(todoTable.archivedAt),
+            eq(todoTable.userId, ctx.user.id)
+          )
+        )
+        .returning()
+        .execute();
+      return [deletedTodo];
+    }),
 });

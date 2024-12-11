@@ -25,7 +25,11 @@ export default $config({
     const api = new sst.aws.Function("api", {
       url: {
         cors: {
-          allowOrigins: ["http://localhost:5173"], // TODO: add the deployed web URL
+          allowOrigins: [
+            "http://localhost:5173",
+            "https://d2ll9092k5byyd.cloudfront.net",
+            "https://d1rpe7o5lbsc5r.cloudfront.net",
+          ], // TODO: add the deployed web URL
           allowCredentials: true,
         },
       },

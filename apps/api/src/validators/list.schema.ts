@@ -8,6 +8,10 @@ export const getByIdSchema = z.object({
   id: listId,
 });
 
+export const getBySlugSchema = z.object({
+  slug: z.string(),
+});
+
 export const createSchema = z.object({
   title: z.string(),
 });

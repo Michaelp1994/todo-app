@@ -1,22 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "./layouts/Layout";
-import Home from "./routes/Home";
-import Login from "./routes/Login";
-import Register from "./routes/Register";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { AuthLayout } from "./layouts/AuthLayout";
-import Todos from "./routes/Todos";
+import Todos from "./pages/Todos";
+import ImportantTodos from "./pages/ImportantTodos";
+import WeekTodos from "./pages/WeekTodos";
+import ArchivedTodos from "./pages/ArchivedTodos";
+import ListTodos from "./pages/ListTodos";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/todos" element={<AuthLayout />}>
-            <Route index element={<Todos />} />
-          </Route>
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/todos" element={<AuthLayout />}>
+          <Route index element={<Todos />} />
+          <Route path="important" element={<ImportantTodos />} />
+          <Route path="week" element={<WeekTodos />} />
+          <Route path="archived" element={<ArchivedTodos />} />
+          <Route path=":slug" element={<ListTodos />} />
         </Route>
       </Routes>
     </BrowserRouter>

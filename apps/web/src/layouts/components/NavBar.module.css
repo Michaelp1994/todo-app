@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  padding-inline: 2rem;
+  background-color: white;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuList {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menuListItem {
+}
+
+.menuListItemLink {
+  display: block;
+  padding-block: 1rem;
+  padding-inline: 2rem;
+  border-radius: 0.25rem;
+  color: black;
+  text-decoration: none;
+  &:hover {
+    background-color: var(--muted);
+  }
+}
