@@ -4,23 +4,35 @@ import {
   createSchema,
   deleteAllArchivedSchema,
   deleteSchema,
+  getAllByListSlugSchema,
   getAllSchema,
   getByIdSchema,
   getWeekSchema,
   updateSchema,
 } from "../validators/todo.schema";
 import { todoTable } from "../db/schemas/todo";
-import { and, between, eq, isNotNull, isNull } from "drizzle-orm";
+import {
+  and,
+  between,
+  eq,
+  getTableColumns,
+  isNotNull,
+  isNull,
+} from "drizzle-orm";
 import { addDays, format } from "date-fns";
 import { groupTodosByDate } from "../utils/groupTodosByDueDate";
+import { listTable } from "../db/schemas/list";
+
+const todoColumns = getTableColumns(todoTable);
 
 export default router({
   getAllToday: authProcedure
     .input(getAllSchema)
     .query(async ({ ctx, input }) => {
       const todos = await ctx.db
-        .select()
+        .select({ ...todoColumns, list: listTable })
         .from(todoTable)
+        .leftJoin(listTable, eq(listTable.id, todoTable.listId))
         .where(
           and(
             eq(todoTable.userId, ctx.user.id),
@@ -33,12 +45,26 @@ export default router({
         .orderBy(todoTable.createdAt);
       return todos;
     }),
+  getAllByListSlug: authProcedure
+    .input(getAllByListSlugSchema)
+    .query(async ({ ctx, input }) => {
+      const todos = await ctx.db
+        .select({ ...todoColumns, list: listTable })
+        .from(todoTable)
+        .innerJoin(listTable, eq(listTable.id, todoTable.listId))
+        .where(
+          and(eq(todoTable.userId, ctx.user.id), eq(listTable.slug, input.slug))
+        )
+        .orderBy(todoTable.createdAt);
+      return todos;
+    }),
   getWeek: authProcedure.input(getWeekSchema).query(async ({ ctx }) => {
     const today = new Date();
     const fiveDays = addDays(today, 5);
     const todos = await ctx.db
-      .select()
+      .select({ ...todoColumns, list: listTable })
       .from(todoTable)
+      .leftJoin(listTable, eq(listTable.id, todoTable.listId))
       .where(
         and(
           eq(todoTable.userId, ctx.user.id),
@@ -64,7 +90,7 @@ export default router({
   create: authProcedure.input(createSchema).mutation(async ({ ctx, input }) => {
     const [newTodo] = await ctx.db
       .insert(todoTable)
-      .values({ ...input, userId: ctx.user.id })
+      .values({ ...input, order: 1, userId: ctx.user.id })
       .returning()
       .execute();
     return newTodo;
