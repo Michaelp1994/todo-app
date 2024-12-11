@@ -8,6 +8,7 @@ import Todos from "./pages/Todos";
 import ImportantTodos from "./pages/ImportantTodos";
 import WeekTodos from "./pages/WeekTodos";
 import ArchivedTodos from "./pages/ArchivedTodos";
+import ListTodos from "./pages/ListTodos";
 
 export default function Router() {
   return (
@@ -23,6 +24,7 @@ export default function Router() {
           <Route path="important" element={<ImportantTodos />} />
           <Route path="week" element={<WeekTodos />} />
           <Route path="archived" element={<ArchivedTodos />} />
+          <Route path=":slug" element={<ListTodos />} />
         </Route>
       </Routes>
     </BrowserRouter>
