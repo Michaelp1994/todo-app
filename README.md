@@ -35,20 +35,20 @@
   - [x] API
   - [x] Component
 
-- [ ] All Lists
+- [x] All Lists
 
-  - [ ] API
+  - [x] API
   - [ ] Page
 
-- [ ] View list
+- [x] View list
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Page
 
-- [ ] Add list
+- [x] Add list
 
-  - [ ] API
-  - [ ] Page
+  - [x] API
+  - [x] Page
 
 - [ ] Update list
   - [ ] API
@@ -61,4 +61,4 @@
 
 - [ ] file / image upload (S3 bucket)
 - [ ] drag and drop / rearrange ordering
-- [ ] email notifications
+- [ ] email notifications (SES)
