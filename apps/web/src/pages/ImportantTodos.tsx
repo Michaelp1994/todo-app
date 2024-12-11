@@ -1,11 +1,25 @@
+import CreateTodoModal from "../components/CreateTodoModal";
+import ImportantTodoList from "../components/ImportantTodoList";
 import Container from "../components/layouts/Container";
-import TodoList from "../components/TodoList";
+import {
+  PageSubtitle,
+  PageTitle,
+  PageToolbar,
+} from "../components/layouts/PageToolbar";
 
 export default function ImportantTodos() {
   return (
     <Container>
-      <h1>Important</h1>
-      <TodoList />
+      <PageToolbar>
+        <div>
+          <PageTitle>Important</PageTitle>
+          <PageSubtitle>
+            Only todos marked as important will be shown here.
+          </PageSubtitle>
+        </div>
+        <CreateTodoModal />
+      </PageToolbar>
+      <ImportantTodoList />
     </Container>
   );
 }
