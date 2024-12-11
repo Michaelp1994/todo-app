@@ -8,7 +8,7 @@ interface CenterCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function CenterCard({ children, ...props }: CenterCardProps) {
   return (
     <main className={styles.container} {...props}>
-      {children}
+      <div className={styles.innerContainer}>{children}</div>
     </main>
   );
 }

@@ -1,12 +1,12 @@
 .input {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   padding: 8px;
   border-radius: 4px;
   width: 100%;
 }
 
 .inputSkeleton {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   padding: 8px;
   border-radius: 4px;
   width: 100%;

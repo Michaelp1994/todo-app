@@ -18,6 +18,7 @@ export default function Modal({
   if (!open) {
     return null;
   }
+
   return createPortal(
     <div className={styles.container} onClick={onOpenChange}>
       <dialog

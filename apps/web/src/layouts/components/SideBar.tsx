@@ -2,6 +2,8 @@ import { Link } from "react-router";
 import styles from "./SideBar.module.css";
 import { Divider } from "../../components/ui/Divider";
 import LogoutButton from "./LogoutButton";
+import { api } from "../../utils/api";
+import CreateListModal from "../../components/CreateListModal";
 
 const listItems = [
   {
@@ -23,6 +25,7 @@ const listItems = [
 ];
 
 export default function SideBar() {
+  const { data } = api.list.getAll.useQuery({});
   return (
     <div className={styles.container}>
       <h3 className={styles.menuTitle}>Todos</h3>
@@ -36,7 +39,19 @@ export default function SideBar() {
         ))}
       </ul>
       <Divider />
-      <h3 className={styles.menuTitle}>Lists</h3>
+      <div className={styles.menuBar}>
+        <h3 className={styles.menuTitle}>Lists</h3>
+        <CreateListModal />
+      </div>
+      <ul className={styles.menu}>
+        {data?.map((list) => (
+          <li key={list.id}>
+            <Link to={list.slug} className={styles.menuItemLink}>
+              {list.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
       <div className={styles.spacer} />
       <div className={styles.bottomContainer}>
         <LogoutButton />
