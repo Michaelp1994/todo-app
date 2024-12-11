@@ -14,7 +14,7 @@ export default function ImportantTodoButton({
   const utils = api.useUtils();
   const completeMutation = api.todo.update.useMutation({
     async onSuccess() {
-      await utils.todo.getAll.invalidate();
+      await utils.todo.getAllToday.invalidate();
     },
     onError(error) {
       console.error(error);

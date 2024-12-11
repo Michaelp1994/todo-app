@@ -1,4 +1,4 @@
-import { Trash } from "@phosphor-icons/react";
+import { BoxArrowDown } from "@phosphor-icons/react";
 import { api } from "../utils/api";
 import Button from "./ui/Button";
 
@@ -10,7 +10,7 @@ export default function ArchiveTodoButton({ todoId }: ArchiveTodoButtonProps) {
   const utils = api.useUtils();
   const archiveMutation = api.todo.archive.useMutation({
     async onSuccess() {
-      await utils.todo.getAll.invalidate();
+      await utils.todo.getAllToday.invalidate();
     },
     onError(error) {
       console.error(error);
@@ -23,7 +23,7 @@ export default function ArchiveTodoButton({ todoId }: ArchiveTodoButtonProps) {
       onClick={() => archiveMutation.mutate({ id: todoId })}
       disabled={archiveMutation.isLoading}
     >
-      <Trash />
+      <BoxArrowDown size={16} />
     </Button>
   );
 }
