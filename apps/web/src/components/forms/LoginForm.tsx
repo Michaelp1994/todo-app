@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { api } from "../../utils/api";
 import { Form, FormActions } from "../ui/Form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function LoginForm() {
   const utils = api.useUtils();
@@ -47,6 +47,7 @@ export default function LoginForm() {
           {loginMutation.isLoading ? "Loading..." : "Login"}
         </Button>
       </FormActions>
+      Don't have an account? <Link to="/register">Sign Up</Link>
     </Form>
   );
 }
