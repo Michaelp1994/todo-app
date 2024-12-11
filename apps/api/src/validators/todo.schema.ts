@@ -9,19 +9,22 @@ export const getAllSchema = z.object({
 
 export const getWeekSchema = z.object({});
 
+export const getAllByListSlugSchema = z.object({
+  slug: z.string().uuid(),
+});
+
 export const getByIdSchema = z.object({
   id: todoId,
 });
 
 export const createSchema = z.object({
   title: z.string(),
-  description: z.string(),
+  description: z.string().nullable(),
   completed: z.boolean(),
   important: z.boolean(),
-  dueDate: z.string().date(),
+  dueDate: z.string().date().nullable(),
   attachmentUrl: z.string(),
-  listId: z.number().optional(),
-  order: z.number(),
+  listId: z.number().nullable(),
 });
 
 export const updateSchema = createSchema.partial().extend({
