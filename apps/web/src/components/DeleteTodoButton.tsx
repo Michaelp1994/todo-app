@@ -1,19 +1,16 @@
+import { Trash } from "@phosphor-icons/react";
 import { api } from "../utils/api";
 import Button from "./ui/Button";
 
 interface DeleteTodoButtonProps {
-  children: React.ReactNode;
   todoId: number;
 }
 
-export default function DeleteTodoButton({
-  children,
-  todoId,
-}: DeleteTodoButtonProps) {
+export default function DeleteTodoButton({ todoId }: DeleteTodoButtonProps) {
   const utils = api.useUtils();
   const deleteMutation = api.todo.delete.useMutation({
     async onSuccess() {
-      await utils.todo.getAll.invalidate();
+      await utils.todo.getAllToday.invalidate();
     },
     onError(error) {
       console.error(error);
@@ -24,8 +21,9 @@ export default function DeleteTodoButton({
     <Button
       onClick={() => deleteMutation.mutate({ id: todoId })}
       disabled={deleteMutation.isLoading}
+      variant="icon"
     >
-      {deleteMutation.isLoading ? "Loading..." : children}
+      <Trash />
     </Button>
   );
 }

@@ -1,11 +1,23 @@
+import ArchivedTodoList from "../components/ArchivedTodoList";
+import DeleteAllArchivedButton from "../components/DeleteAllArchivedButton";
 import Container from "../components/layouts/Container";
-import TodoList from "../components/TodoList";
+import {
+  PageSubtitle,
+  PageTitle,
+  PageToolbar,
+} from "../components/layouts/PageToolbar";
 
 export default function ArchivedTodos() {
   return (
     <Container>
-      <h1>Archived</h1>
-      <TodoList />
+      <PageToolbar>
+        <div>
+          <PageTitle>Archived</PageTitle>
+          <PageSubtitle></PageSubtitle>
+        </div>
+        <DeleteAllArchivedButton />
+      </PageToolbar>
+      <ArchivedTodoList />
     </Container>
   );
 }
